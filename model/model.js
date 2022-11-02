@@ -12,6 +12,14 @@ const dataSchema = new mongoose.Schema({
     password: {
         required: true,
         type: String
+    },
+    date: {
+        required: true,
+        type: String
+    },
+    time: {
+        required: true,
+        type: String
     }
 })
 
