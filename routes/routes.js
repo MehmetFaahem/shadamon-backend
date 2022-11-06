@@ -28,4 +28,20 @@ router.get('/users', async (req, res) => {
         res.status(500).json({ message: error.message })
     }
 })
+
+router.delete('/delete/:id', async (req, res) => {
+    try {
+        if (req.params.id === 'all') {
+            const data = await Model.deleteMany({});
+            res.status(200).json(data)
+        } else {
+            const data = await Model.findOneAndDelete({ _id: req.params.id });
+            res.status(200).json(data)
+        }
+    }
+    catch (error) {
+        res.status(500).json({ message: error.message })
+    }
+})
+
 module.exports = router;
