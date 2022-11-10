@@ -23,10 +23,11 @@ router.post('/add', upload.single('image'), async (req, res) => {
         name: req.body.name,
         description: req.body.description,
         condition: req.body.condition,
-        img: {
-            data: fs.readFileSync(path.join(__dirname + '/server/uploads/' + req.file.filename)),
-            contentType: 'image/png'
-        },
+        img: req.body.img,
+        // {
+        //     data: fs.readFileSync(path.join(__dirname + '/server/uploads/' + req.file.filename)),
+        //     contentType: 'image/png'
+        // },
         createdDate: req.body.date,
         createdTime: req.body.time
     })
