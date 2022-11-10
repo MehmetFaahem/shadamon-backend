@@ -44,4 +44,20 @@ router.delete('/delete/:id', async (req, res) => {
     }
 })
 
+router.put('/update/:id', async (req, res) => {
+    try {
+        const updatedUser = new Model({
+            _id: req.params.id,
+            name: req.body.name,
+            email: req.body.email,
+            password: req.body.password,
+        })
+        const data = await Model.updateOne({ _id: req.params.id }, updatedUser);
+        res.status(200).json(data)
+    }
+    catch (error) {
+        res.status(500).json({ message: error.message })
+    }
+})
+
 module.exports = router;
