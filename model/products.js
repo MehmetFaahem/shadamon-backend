@@ -14,9 +14,12 @@ const ProductSchema = new Schema({
         type: String,
         default: 'used',
     },
+    price: {
+        type: Number,
+        required: true
+    },
     img: {
-        data: Buffer,
-        contentType: String
+        type: String
     },
     createdDate: {
         type: String,
