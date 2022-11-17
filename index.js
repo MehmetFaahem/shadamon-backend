@@ -1,6 +1,7 @@
 const express = require("express");
 const app = express();
 const cors = require('cors')
+app.use(cors())
 const mongoose = require('mongoose')
 const bodyParser = require('body-parser');
 require('dotenv').config();
@@ -15,7 +16,7 @@ const productroute = require('./routes/productadd')
 app.use(bodyParser.urlencoded({ extended: false }))
 app.use(bodyParser.json())
 
-app.use(cors())
+
 app.use(express.json());
 app.use('/api', routes)
 app.use('/api/category', categoryroute)
