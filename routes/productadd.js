@@ -3,7 +3,10 @@ const router = express.Router()
 const fs = require('fs');
 const path = require('path');
 const multer = require('multer');
+const cors = require('cors')
 const cloudinary = require('cloudinary').v2
+
+router.use(cors())
 
 const Product = require('../model/products')
 
