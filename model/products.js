@@ -19,7 +19,7 @@ const ProductSchema = new Schema({
         required: true
     },
     img: {
-        type: Buffer
+        type: String
     },
     createdDate: {
         type: String,
