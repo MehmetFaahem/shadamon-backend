@@ -27,27 +27,53 @@ const storage = multer.diskStorage({
 
 const upload = multer({ storage: storage });
 
-router.post('/add', upload.single('image'), async (req, res) => {
-    const Imagedata = {
-        image: req.file.path
-    }
-    cloudinary.uploader.upload(Imagedata.image)
+router.post('/add', async (req, res) => {
 
-        .then(async (result) => {
-            const data = new Product({
-                name: req.body.name,
-                description: req.body.description,
-                condition: req.body.condition,
-                price: req.body.price,
-                img: result.url,
-                createdDate: req.body.date,
-                createdTime: req.body.time
-            })
-            const response = await data.save();
-            res.status(200).send('Uploaded')
-        }).catch((error) => {
-            res.status(400).json({ message: error.message })
-        });
+    // const Imagedata = {
+    //     image: req.file.path
+    // }
+    // cloudinary.uploader.upload(Imagedata.image)
+
+    try {
+        const data = new Product({
+            name: req.body.name,
+            description: req.body.description,
+            condition: req.body.condition,
+            price: req.body.price,
+            img: req.body.img,
+            createdDate: req.body.date,
+            createdTime: req.body.time
+        })
+        const response = await data.save();
+        res.status(200).send('Uploaded')
+    } catch (error) {
+        res.status(400).json({ message: error.message })
+    }
+
+    // .then(async (result) => {
+
+    // }).catch((error) => {
+
+    // })
+})
+
+router.put('/update/:id', async (req, res) => {
+    try {
+        const updatedProduct = new Product({
+            _id: req.params.id,
+            name: req.body.name,
+            description: req.body.description,
+            condition: req.body.condition,
+            price: req.body.price,
+            createdDate: req.body.date,
+            createdTime: req.body.time
+        })
+
+        const updating = await Product.updateOne({ _id: req.params.id }, updatedProduct)
+        res.status(200).json(updatedProduct)
+    } catch (error) {
+        res.status(500).json({ message: error.message })
+    }
 })
 
 router.get('/get', async (req, res) => {
