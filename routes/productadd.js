@@ -27,34 +27,27 @@ const storage = multer.diskStorage({
 
 const upload = multer({ storage: storage });
 
-router.post('/add', async (req, res) => {
-
-    // const Imagedata = {
-    //     image: req.file.path
-    // }
-    // cloudinary.uploader.upload(Imagedata.image)
-
-    try {
-        const data = new Product({
-            name: req.body.name,
-            description: req.body.description,
-            condition: req.body.condition,
-            price: req.body.price,
-            img: req.body.img,
-            createdDate: req.body.date,
-            createdTime: req.body.time
-        })
-        const response = await data.save();
-        res.status(200).send('Uploaded')
-    } catch (error) {
-        res.status(400).json({ message: error.message })
+router.post('/add', upload.single('image'), async (req, res) => {
+    const Imagedata = {
+        image: req.file.path
     }
+    cloudinary.uploader.upload(Imagedata.image)
 
-    // .then(async (result) => {
-
-    // }).catch((error) => {
-
-    // })
+        .then(async (result) => {
+            const data = new Product({
+                name: req.body.name,
+                description: req.body.description,
+                condition: req.body.condition,
+                price: req.body.price,
+                img: result.url,
+                createdDate: req.body.date,
+                createdTime: req.body.time
+            })
+            const response = await data.save();
+            res.status(200).send('Uploaded')
+        }).catch((error) => {
+            res.status(400).json({ message: error.message })
+        })
 })
 
 router.put('/update/:id', async (req, res) => {
