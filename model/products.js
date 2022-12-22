@@ -10,6 +10,10 @@ const ProductSchema = new Schema({
     description: {
         type: String,
     },
+    author: {
+        type: String,
+        default: 'Fulan'
+    },
     condition: {
         type: String,
         default: 'used',

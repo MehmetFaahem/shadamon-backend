@@ -37,6 +37,7 @@ router.post('/add', upload.single('image'), async (req, res) => {
             const data = new Product({
                 name: req.body.name,
                 description: req.body.description,
+                author: req.body.author,
                 condition: req.body.condition,
                 price: req.body.price,
                 img: result.url,
@@ -56,6 +57,7 @@ router.put('/update/:id', async (req, res) => {
             _id: req.params.id,
             name: req.body.name,
             description: req.body.description,
+            author: req.body.author,
             condition: req.body.condition,
             price: req.body.price,
             createdDate: req.body.date,
